@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const PORT = process.env.PORT|| 4000
+const PORT = process.env.PORT || 80
 const MONGODB_URI = process.env.MONGODB_URI || secrets.MONGODB_URI
 const SESSION_SECRET = process.env.SESSION_SECRET || secrets.SESSION_SECRET
 const EMAIL_NAME = process.env.EMAIL_NAME || secrets.EMAIL_NAME
