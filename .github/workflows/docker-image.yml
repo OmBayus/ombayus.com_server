@@ -15,6 +15,6 @@ jobs:
       uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: omerbayus
+        heroku_app_name: ombayuscom
         heroku_email: omerbayramcavus@gmail.com
         usedocker: true
