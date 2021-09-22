@@ -39,6 +39,10 @@ app.use(express.json())
 //connect database
 require("./utils/mongo")
 
+app.get("/",(req,res)=>{
+  res.send("Hello")
+})
+
 //using outers
 app.use("/api/contact",contactRouter)
 app.use("/api/project",projectRouter)
