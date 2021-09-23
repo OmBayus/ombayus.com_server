@@ -1,6 +1,7 @@
 const express = require('express');
 const session = require("express-session")
 const cors = require('cors')
+const helmet = require('helmet')
 
 const app = express();
 const http = require('http');
@@ -17,7 +18,9 @@ const productRouter = require("./routers/product")
 
 const middleware = require("./utils/middleware")
 
-app.set('trust proxy',1)
+app.use(helmet());
+
+app.set('trustproxy', true)
 app.use(session({
   secret: SESSION_SECRET,
   resave: false,
