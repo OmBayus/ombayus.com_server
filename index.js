@@ -22,7 +22,7 @@ app.use(session({
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false, maxAge:  6*60*60*1000},
+  cookie: { secure: true, maxAge:  6*60*60*1000},
   unset: 'destroy'
 }));
 
