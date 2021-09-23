@@ -3,10 +3,10 @@ const session = require("express-session")
 const cors = require('cors')
 
 const app = express();
-// const http = require('http');
-// const server = http.createServer(app);
-// const { Server } = require("socket.io");
-// const io = new Server(server);
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
 const {SESSION_SECRET} = require("./utils/config")
 
@@ -55,16 +55,18 @@ app.use(middleware.errorHandler)
 
 
 
-// io.on('connection', (socket) => {
-//   console.log('a user connected');
-// });
-
-// server.listen(PORT, () => {
-//   console.log('listening the server on '+PORT);
-// });
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
 
 const PORT = process.env.PORT || 80
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log('listening the server on '+PORT);
 });
+
+
+
+// app.listen(PORT, () => {
+//   console.log('listening the server on '+PORT);
+// });
