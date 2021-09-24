@@ -20,12 +20,12 @@ const middleware = require("./utils/middleware")
 
 app.use(helmet());
 
-app.set('trustproxy', true)
+app.set('trust proxy', 4)
 app.use(session({
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true, maxAge:  6*60*60*1000},
+  cookie: { secure: true, maxAge:  6*60*60*1000,httpOnly:false,sameSite:true},
   unset: 'destroy'
 }));
 
