@@ -24,8 +24,9 @@ app.set('trust proxy', 4)
 app.use(session({
   secret: SESSION_SECRET,
   resave: false,
+  proxy:true,
   saveUninitialized: true,
-  cookie: { secure: true, maxAge:  6*60*60*1000,httpOnly:false,sameSite:true},
+  cookie: { secure: true, maxAge:  6*60*60*1000,sameSite:'none'},
   unset: 'destroy'
 }));
 
