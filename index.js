@@ -25,9 +25,9 @@ app.use(session({
   secret: SESSION_SECRET,
   resave: false,
   proxy:true,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: { secure: true, maxAge:  6*60*60*1000,sameSite:'none'},
-  unset: 'destroy'
+  unset: 'keep'
 }));
 
 app.use(cors({
