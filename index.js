@@ -23,7 +23,7 @@ app.use(helmet());
 app.set('trust proxy', 1)
 app.use(session({
   secret: SESSION_SECRET,
-  resave: true,
+  resave: false,
   proxy:true,
   saveUninitialized: false,
   cookie: { secure: true, maxAge:  6*60*60*1000,sameSite:'none'},
@@ -33,7 +33,7 @@ app.use(session({
 app.use(cors({
   origin: ['http://localhost:3000','https://www.ombayus.com'],
   methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
-  credentials: true
+  credentials: 'include'
 }));
 
 
