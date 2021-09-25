@@ -23,10 +23,10 @@ app.use(helmet());
 app.set('trust proxy', 1)
 app.use(session({
   secret: SESSION_SECRET,
-  resave: false,
+  resave: true,
   proxy:true,
   saveUninitialized: false,
-  cookie: { secure: true, maxAge:  6*60*60*1000,sameSite:'lax'},
+  cookie: { secure: true, maxAge:  6*60*60*1000,sameSite:'none'},
   unset: 'destroy'
 }));
 
