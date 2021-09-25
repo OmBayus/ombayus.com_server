@@ -23,9 +23,9 @@ app.use(helmet());
 app.set('trust proxy', 1)
 app.use(session({
   secret: SESSION_SECRET,
-  resave: true,
+  resave: false,
   proxy:true,
-  saveUninitialized: false,
+  saveUninitialized: true,
   cookie: { secure: true, maxAge:  6*60*60*1000,sameSite:'none'},
   unset: 'destroy'
 }));
