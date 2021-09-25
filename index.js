@@ -33,7 +33,7 @@ app.use(session({
 app.use(cors({
   origin: ['http://localhost:3000','https://www.ombayus.com'],
   methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
-  credentials: 'include'
+  credentials: true
 }));
 
 
