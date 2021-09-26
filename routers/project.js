@@ -14,7 +14,8 @@ router.post("/add",async(req,res)=>{
     
     const newProject = new Project({
         title:req.body.title,
-        href:req.body.href
+        href:req.body.href,
+        status:req.body.status
     })
 
     newProject.save((err)=>{
