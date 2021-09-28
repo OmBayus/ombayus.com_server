@@ -32,6 +32,10 @@ router.post("/add",async(req,res)=>{
 router.post("/update",(req,res)=>{
     Project.findOneAndUpdate({_id:req.body._id},{...req.body},{new:true})
     .then(updatedPost=>{
+        if(!updatedPost){
+            res.json({error:"error"})
+            return
+        }
         res.json(updatedPost)
     })
     .catch(err=> res.json({error:err.message}))
