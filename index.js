@@ -45,15 +45,11 @@ app.use(express.json())
 require("./utils/mongo")
 
 app.use(function (req, res, next) {
-  var ip;
-  if (req.headers['x-forwarded-for']) {
-      ip = req.headers['x-forwarded-for'].split(",")[0];
-  } else if (req.connection && req.connection.remoteAddress) {
-      ip = req.connection.remoteAddress;
-  } else {
-      ip = req.ip;
-  }
-  res.json({error:ip})
+  res.json({
+    protocol:req.protocol,
+    host:req.host,
+    originalUrl:req.originalUrl
+  })
 });
 
 app.get("/",(req,res)=>{
