@@ -3,6 +3,14 @@ const Project = require("../models/project")
 
 
 router.get("/getAll",(req,res)=>{
+    if(req.query.status){
+        Project.find({status:req.query.status},(err,items)=>{
+            if(!err){
+                  res.json(items)
+            }
+        })
+        return
+    }
     Project.find({},(err,items)=>{
         if(!err){
               res.json(items)
@@ -56,6 +64,14 @@ router.post("/del",async(req,res)=>{
     })
     .catch(err=>res.json({error:err.message}))
 
+})
+
+router.post("/delMany",(req,res)=>{
+
+    Project.deleteMany({_id:{$in:req.body}}).then(item=>{
+        res.json(item)
+    })
+    .catch(err=>res.json({error:err.message}))
 })
 
 
