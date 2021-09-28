@@ -44,6 +44,15 @@ app.use(express.json())
 //connect database
 require("./utils/mongo")
 
+app.use(function (req, res, next) {
+  console.log(req.ip)
+  if (req.ip !== '75.2.60.5') { // Wrong IP address
+    res.status(401);
+    return res.send('Permission denied');
+  }
+  next(); // correct IP address, continue middleware chain
+});
+
 app.get("/",(req,res)=>{
   res.send("Hello")
 })
