@@ -48,7 +48,7 @@ app.use(function (req, res, next) {
   console.log(req.ip)
   if (req.ip !== '75.2.60.5') { // Wrong IP address
     res.status(401);
-    return res.send('Permission denied ' +req.ip);
+    return res.json({error:'Permission denied ' +req.ip});
   }
   next(); // correct IP address, continue middleware chain
 });
