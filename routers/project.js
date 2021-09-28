@@ -25,10 +25,36 @@ router.post("/add",async(req,res)=>{
         res.json(newProject)
         
     })
-    
-
 
 })
+
+
+router.post("/update",(req,res)=>{
+    Project.findOneAndUpdate({_id:req.body._id},{...req.body},{new:true})
+    .then(updatedPost=>{
+        res.json(updatedPost)
+    })
+    .catch(err=> res.json({error:err.message}))
+})
+
+
+
+
+router.post("/del",async(req,res)=>{
+
+    Project.findOneAndDelete({_id:req.body._id})
+    .then(item=>{
+        if(!item){
+            res.json({error:"The project has already been deleted."})
+            return
+        }
+        res.json(item)
+    })
+    .catch(err=>res.json({error:err.message}))
+
+})
+
+
 
 
 module.exports = router
