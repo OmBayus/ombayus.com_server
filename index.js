@@ -44,14 +44,6 @@ app.use(express.json())
 //connect database
 require("./utils/mongo")
 
-app.use(function (req, res, next) {
-  res.json({
-    protocol:req.protocol,
-    host:req.host,
-    originalUrl:req.originalUrl
-  })
-});
-
 app.get("/",(req,res)=>{
   res.send("Hello")
 })
