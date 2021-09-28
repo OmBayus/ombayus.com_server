@@ -44,6 +44,18 @@ app.use(express.json())
 //connect database
 require("./utils/mongo")
 
+app.use(function (req, res, next) {
+  var ip;
+  if (req.headers['x-forwarded-for']) {
+      ip = req.headers['x-forwarded-for'].split(",")[0];
+  } else if (req.connection && req.connection.remoteAddress) {
+      ip = req.connection.remoteAddress;
+  } else {
+      ip = req.ip;
+  }
+  res.json({error:ip})
+});
+
 app.get("/",(req,res)=>{
   res.send("Hello")
 })
