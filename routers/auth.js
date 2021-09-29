@@ -4,7 +4,6 @@ const bcrypt = require("bcrypt")
 
 
 router.post("/token",(req,res)=>{
-
     User.findOne({name:req.body.name}).then(user=>{
         if(user){
             bcrypt.compare(req.body.password, user.password, function(err, result) {
@@ -27,7 +26,6 @@ router.post("/token",(req,res)=>{
 })
 
 router.post("/auth",(req,res)=>{
-
     if(req.session.name){
         res.json({auth:true,name:String(req.session.name)})
     }
