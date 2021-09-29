@@ -15,6 +15,8 @@ const {SESSION_SECRET} = require("./utils/config")
 const contactRouter = require("./routers/contact")
 const projectRouter = require("./routers/project")
 const productRouter = require("./routers/product")
+const userRouter = require("./routers/user")
+const authRouter = require("./routers/auth")
 
 const middleware = require("./utils/middleware")
 
@@ -52,6 +54,8 @@ app.get("/",(req,res)=>{
 app.use("/api/contact",contactRouter)
 app.use("/api/project",projectRouter)
 app.use("/api/product",productRouter)
+app.use("/api/user",userRouter)
+app.use("/api/auth",authRouter)
 
 app.use(middleware.unknownEndpoint)
 
