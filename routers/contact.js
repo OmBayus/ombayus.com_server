@@ -1,7 +1,36 @@
 const router= require('express').Router()
 const Contact = require("../models/contact")
 const SendMail = require("../utils/sendEmail")
+const {authExactor} = require("../utils/middleware")
 
+router.post("/sendMsg",async(req,res)=>{
+    
+    const newMsg = new Contact({
+        name:req.body.name,
+        email:req.body.email,
+        message:req.body.message
+    })
+
+    if(Date.now() > (req.session.sendMsg  || 0) + (1000*60*60)){
+        newMsg.save((err)=>{
+            if(err){
+                return res.json({error:"error"})
+            }
+            SendMail("omerbayramcavus@gmail.com","ombayus.com Contact Message",newMsg)
+            req.session.sendMsg = Date.now()
+            res.json(newMsg)
+            
+        })
+    }
+    else{
+        res.json({error:"You can send one message per hour."})
+    }
+    
+
+
+})
+
+router.use(authExactor)
 
 router.get("/getAll",(req,res)=>{
     Contact.find({},(err,items)=>{
@@ -51,32 +80,7 @@ router.post("/del",async(req,res)=>{
 
 })
 
-router.post("/sendMsg",async(req,res)=>{
-    
-    const newMsg = new Contact({
-        name:req.body.name,
-        email:req.body.email,
-        message:req.body.message
-    })
 
-    if(Date.now() > (req.session.sendMsg  || 0) + (1000*60*60)){
-        newMsg.save((err)=>{
-            if(err){
-                return res.json({error:"error"})
-            }
-            SendMail("omerbayramcavus@gmail.com","ombayus.com Contact Message",newMsg)
-            req.session.sendMsg = Date.now()
-            res.json(newMsg)
-            
-        })
-    }
-    else{
-        res.json({error:"You can send one message per hour."})
-    }
-    
-
-
-})
 
 
 module.exports = router

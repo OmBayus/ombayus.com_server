@@ -13,4 +13,11 @@ const errorHandler = (error, request, response, next) => {
     next(error)
 }
 
-module.exports = {errorHandler,unknownEndpoint}
+const authExactor = (req,res,next)=>{
+    if(!req.session.name){
+        return res.json({error:"You need to sign in"})
+    }
+    next()
+}
+
+module.exports = {errorHandler,unknownEndpoint,authExactor}

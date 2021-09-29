@@ -1,7 +1,9 @@
 const router= require('express').Router()
 const User = require("../models/user")
 const bcrypt = require("bcrypt")
+const {authExactor} = require("../utils/middleware")
 
+router.use(authExactor)
 
 router.get("/getAll",(req,res)=>{
     User.find({},(err,items)=>{

@@ -10,7 +10,6 @@ router.post("/token",(req,res)=>{
                 if (result) {
                     req.session.userid = user.id
                     req.session.name = user.name
-                    req.session.password = user.password
                     res.json({auth:true})
                 }
                 else {
@@ -38,7 +37,6 @@ router.post("/auth",(req,res)=>{
 router.post("/deltoken",(req,res)=>{
       req.session.userid = null
       req.session.name = null
-      req.session.pass = null
       res.json(true)
 })
 

@@ -1,6 +1,6 @@
 const router= require('express').Router()
 const Product = require("../models/product")
-
+const {authExactor} = require("../utils/middleware")
 
 router.get("/getAll",(req,res)=>{
     Product.find({},(err,items)=>{
@@ -9,6 +9,8 @@ router.get("/getAll",(req,res)=>{
         }
     })
 })
+
+router.use(authExactor)
 
 router.post("/add",async(req,res)=>{
     

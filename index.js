@@ -28,7 +28,7 @@ app.use(session({
   resave: false,
   proxy:true,
   saveUninitialized: true,
-  cookie: { secure: true, maxAge:  6*60*60*1000,sameSite:'strict'},
+  cookie: { secure: true, maxAge:  6*60*60*1000,sameSite:'none'},
   unset: 'destroy'
 }));
 

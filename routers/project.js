@@ -1,6 +1,6 @@
 const router= require('express').Router()
 const Project = require("../models/project")
-
+const {authExactor} = require("../utils/middleware")
 
 router.get("/getAll",(req,res)=>{
     if(req.query.status){
@@ -17,6 +17,8 @@ router.get("/getAll",(req,res)=>{
         }
     })
 })
+
+router.use(authExactor)
 
 router.post("/add",async(req,res)=>{
     
