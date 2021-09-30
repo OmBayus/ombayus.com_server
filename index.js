@@ -28,13 +28,17 @@ app.use(session({
   resave: false,
   proxy:true,
   saveUninitialized: true,
-  cookie: { secure: true,httpOnly:true, maxAge:  6*60*60*1000,sameSite:'none'},
+  cookie: { 
+    secure: process.env.NODE_ENV === "production",
+    httpOnly:true, 
+    maxAge:  6*60*60*1000,
+    sameSite:process.env.NODE_ENV === "production" ? 'none' : 'lax',
+  },
   unset: 'keep'
 }));
 
 app.use(cors({
   origin: ['http://localhost:3000','https://www.ombayus.com','https://admin.ombayus.com'],
-  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
   credentials: true
 }));
 
