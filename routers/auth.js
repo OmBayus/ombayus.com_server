@@ -10,6 +10,7 @@ router.post("/token",(req,res)=>{
                 if (result) {
                     req.session.userid = user.id
                     req.session.name = user.name
+                    req.session.save()
                     res.json({auth:true})
                 }
                 else {
@@ -35,9 +36,13 @@ router.post("/auth",(req,res)=>{
 })
 
 router.post("/deltoken",(req,res)=>{
-      req.session.userid = null
-      req.session.name = null
-      res.json(true)
+    req.session.destroy(err => {
+        if (err) {
+            return res.json(false)
+        }
+        res.json(true)
+    });
+      
 })
 
 module.exports = router

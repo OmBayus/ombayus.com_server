@@ -22,7 +22,10 @@ const middleware = require("./utils/middleware")
 
 app.use(helmet());
 
-app.set('trust proxy', 1)
+
+if(process.env.NODE_ENV === "production"){
+  app.set('trust proxy', 1)
+}
 app.use(session({
   secret: SESSION_SECRET,
   resave: false,
@@ -50,16 +53,17 @@ app.use(express.json())
 //connect database
 require("./utils/mongo")
 
+
 app.get("/",(req,res)=>{
   res.send("Hello")
 })
 
 //using outers
+app.use("/api/auth",authRouter)
 app.use("/api/contact",contactRouter)
 app.use("/api/project",projectRouter)
 app.use("/api/product",productRouter)
 app.use("/api/user",userRouter)
-app.use("/api/auth",authRouter)
 
 app.use(middleware.unknownEndpoint)
 

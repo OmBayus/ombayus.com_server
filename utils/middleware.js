@@ -14,9 +14,9 @@ const errorHandler = (error, request, response, next) => {
 }
 
 const authExactor = (req,res,next)=>{
-    // if(!req.session.name){
-    //     return res.json({error:"You need to sign in"})
-    // }
+    if(!req.session.name){
+        return res.json({error:"You need to sign in"})
+    }
     next()
 }
 
