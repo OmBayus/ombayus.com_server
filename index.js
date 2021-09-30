@@ -2,6 +2,7 @@ const express = require('express');
 const session = require("express-session")
 const cors = require('cors')
 const helmet = require('helmet')
+const csurf = require("csurf")
 
 const app = express();
 const http = require('http');
@@ -22,19 +23,14 @@ const middleware = require("./utils/middleware")
 
 app.use(helmet());
 
-var sessionStore = session.MemoryStore()
-
-app.set('trust proxy', 1)
 app.use(session({
   secret: SESSION_SECRET,
-  store:sessionStore,
   resave: false,
-  proxy:undefined,
-  saveUninitialized: false,
-  cookie: { secure: true, maxAge:  6*60*60*1000,sameSite:'none'},
-  rolling:true,
-  unset: 'destroy'
+  saveUninitialized: true,
+  cookie: { secure: true, maxAge:  6*60*60*1000},
 }));
+
+app.use(csurf())
 
 app.use(cors({
   origin: ['http://localhost:3000','https://www.ombayus.com','https://admin.ombayus.com'],
