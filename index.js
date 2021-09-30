@@ -2,7 +2,6 @@ const express = require('express');
 const session = require("express-session")
 const cors = require('cors')
 const helmet = require('helmet')
-const csurf = require("csurf")
 
 const app = express();
 const http = require('http');
@@ -13,24 +12,25 @@ const io = new Server(server);
 const {SESSION_SECRET} = require("./utils/config")
 
 //routers
-const authRouter = require("./routers/auth")
 const contactRouter = require("./routers/contact")
 const projectRouter = require("./routers/project")
 const productRouter = require("./routers/product")
 const userRouter = require("./routers/user")
+const authRouter = require("./routers/auth")
 
 const middleware = require("./utils/middleware")
 
 app.use(helmet());
 
+app.set('trust proxy', 1)
 app.use(session({
   secret: SESSION_SECRET,
   resave: false,
+  proxy:true,
   saveUninitialized: true,
-  cookie: { secure: true, maxAge:  6*60*60*1000},
+  cookie: { secure: true, maxAge:  6*60*60*1000,sameSite:'none'},
+  unset: 'keep'
 }));
-
-app.use(csurf())
 
 app.use(cors({
   origin: ['http://localhost:3000','https://www.ombayus.com','https://admin.ombayus.com'],
