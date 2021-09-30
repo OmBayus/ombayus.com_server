@@ -22,10 +22,12 @@ const middleware = require("./utils/middleware")
 
 app.use(helmet());
 
+var sessionStore = session.MemoryStore()
 
 app.set('trust proxy', 1)
 app.use(session({
   secret: SESSION_SECRET,
+  store:sessionStore,
   resave: false,
   proxy:undefined,
   saveUninitialized: false,
