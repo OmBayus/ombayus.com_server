@@ -12,11 +12,11 @@ const io = new Server(server);
 const {SESSION_SECRET} = require("./utils/config")
 
 //routers
+const authRouter = require("./routers/auth")
 const contactRouter = require("./routers/contact")
 const projectRouter = require("./routers/project")
 const productRouter = require("./routers/product")
 const userRouter = require("./routers/user")
-const authRouter = require("./routers/auth")
 
 const middleware = require("./utils/middleware")
 
