@@ -18,6 +18,11 @@ router.get("/getAll",(req,res)=>{
     })
 })
 
+router.get("/getLength",async(req,res)=>{
+    var len = await Project.count();
+    res.json({len})
+})
+
 router.use(authExactor)
 
 router.post("/add",async(req,res)=>{

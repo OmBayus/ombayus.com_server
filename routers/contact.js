@@ -40,6 +40,11 @@ router.get("/getAll",(req,res)=>{
     })
 })
 
+router.get("/getLength",async(req,res)=>{
+    var len = await Contact.count();
+    res.json({len})
+})
+
 router.get("/getWithPagination",async(req,res)=>{
     var len = await Contact.count();
 

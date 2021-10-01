@@ -5,7 +5,8 @@ const productSchema = new mongoose.Schema({
       price:Number,
       description:String,
       perTime:String,
-      features:Array
+      features:Array,
+      status:Boolean
       
 })
 
