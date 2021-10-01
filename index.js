@@ -2,7 +2,6 @@ const express = require('express');
 const session = require("express-session")
 const cors = require('cors')
 const helmet = require('helmet')
-const cookieParser = require("cookie-parser")
 
 const app = express();
 const http = require('http');
@@ -25,9 +24,9 @@ app.use(helmet());
 
 
 if(process.env.NODE_ENV === "production"){
-  app.set('trust proxy', 1)
+  // app.set('trust proxy', 1)
+  app.enable('trust proxy');
 }
-app.use(cookieParser(SESSION_SECRET))
 app.use(session({
   secret: SESSION_SECRET,
   resave: false,
