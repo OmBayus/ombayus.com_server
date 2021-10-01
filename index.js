@@ -75,7 +75,11 @@ app.use(middleware.errorHandler)
 
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+
+  socket.on("sendMsg",(data)=>{
+    socket.emit("sendMsg",true)
+    io.sockets.emit("Msg",data)
+  })
 });
 
 const PORT = process.env.PORT || 80
