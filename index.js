@@ -43,7 +43,7 @@ app.use(session({
 }));
 
 app.use(cors({
-  origin: ['http://localhost:3000','http://localhost:3001','https://www.ombayus.com','https://admin.ombayus.com'],
+  origin: (process.env.NODE_ENV === "production" ? '*':['https://www.ombayus.com','https://admin.ombayus.com']),
   credentials: true
 }));
 
