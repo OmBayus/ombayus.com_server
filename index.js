@@ -15,7 +15,7 @@ const {SESSION_SECRET} = require("./utils/config")
 const contactRouter = require("./routers/contact")
 const projectRouter = require("./routers/project")
 const productRouter = require("./routers/product")
-const orderRouter = require("./routers/order")
+// const orderRouter = require("./routers/order")
 const userRouter = require("./routers/user")
 const authRouter = require("./routers/auth")
 
@@ -65,7 +65,7 @@ app.get("/",(req,res)=>{
 app.use("/api/auth",authRouter)
 app.use("/api/contact",contactRouter)
 app.use("/api/project",projectRouter)
-app.use("/api/order",orderRouter)
+// app.use("/api/order",orderRouter)
 app.use("/api/product",productRouter)
 app.use("/api/user",userRouter)
 
