@@ -1,8 +1,8 @@
 const router= require('express').Router()
 const Order = require("../models/order")
 const Product = require("../models/product")
-const iyzipay = require("../utils/iyzipay")
 const Iyzipay = require('iyzipay');
+const iyzipay = require("../utils/iyzipay")
 
 router.post("/pay",async(req,res)=>{
     const product = await Product.findById(req.body.product)
