@@ -28,10 +28,10 @@ router.post("/pay",async(req,res)=>{
             enabledInstallments: [2, 3, 6, 9],
             buyer: {
                 id: 'BY789',
-                name: 'John',
+                name: req.body.name,
                 surname: 'Doe',
                 gsmNumber: '+905350000000',
-                email: 'email@email.com',
+                email: req.body.email,
                 identityNumber: '74300864791',
                 lastLoginDate: '2015-10-05 12:43:35',
                 registrationDate: '2013-04-21 15:12:09',
@@ -68,13 +68,14 @@ router.post("/pay",async(req,res)=>{
         };
 
         iyzipay.checkoutFormInitialize.create(request, function (err, result) {
+            
             if(result.status !== 'failure'){
                 item.token = result.token
                 item.save()
                 res.json({paymentPageUrl:result.paymentPageUrl})
             }
             else{
-                res.json({error:"error"})
+                res.json({error:result.errorMessage})
             }
             
         });
@@ -107,29 +108,30 @@ router.post("/checkout",(req,res)=>{
         
     }
     else if(req.body.order){
-        Order.findOne({_id:req.body.order},(err,order)=>{
-            if(!err){
-                if(order){
-                    iyzipay.checkoutForm.retrieve({
-                        locale: Iyzipay.LOCALE.TR,
-                        conversationId: '123456789',
-                        token: order.token
-                    }, async function (err, result) {
-                        if(result.paymentStatus){
-                            const product = await Product.findById(order.product)
-                            order.isPaid = true
-                            const data = Object.assign({}, order)._doc
-                            data.success = true
-                            data.product = product
-                            order.save()
-                            res.json(data);
-                        }
-                        else{
-                            res.json({success:false})
-                        }
-                    });
-                }
+        Order.findOne({_id:req.body.order}).then(order=>{
+            if(order){
+                iyzipay.checkoutForm.retrieve({
+                    locale: Iyzipay.LOCALE.TR,
+                    conversationId: '123456789',
+                    token: order.token
+                }, async function (err, result) {
+                    if(result.paymentStatus){
+                        const product = await Product.findById(order.product)
+                        order.isPaid = true
+                        const data = Object.assign({}, order)._doc
+                        data.success = true
+                        data.product = product
+                        order.save()
+                        res.json(data);
+                    }
+                    else{
+                        res.json({success:false})
+                    }
+                });
             }
+        })
+        .catch(err=>{
+            res.json({success:false})
         })
         
     }
