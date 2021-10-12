@@ -1,6 +1,8 @@
 const router= require('express').Router()
 const User = require("../models/user")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
+const {SESSION_SECRET} = require("../utils/config")
 
 
 router.post("/token",(req,res)=>{
@@ -8,9 +10,19 @@ router.post("/token",(req,res)=>{
         if(user){
             bcrypt.compare(req.body.password, user.password, function(err, result) {
                 if (result) {
-                    req.session.userid = user.id
-                    req.session.name = user.name
-                    req.session.save()
+                    const token = jwt.sign({name:req.body.name},SESSION_SECRET,{expiresIn:"1h"});
+
+                    const tokenOptions = process.env.NODE_ENV === "production" ? {
+                        httpOnly:true,
+                        secure:true,
+                        maxAge:1000000,
+                        signed:true
+                    } : {};
+
+                    
+
+                    res.cookie("token",token,tokenOptions)
+
                     res.json({auth:true})
                 }
                 else {
@@ -26,22 +38,24 @@ router.post("/token",(req,res)=>{
 })
 
 router.post("/auth",(req,res)=>{
-    if(req.session.name){
-        res.json({auth:true,name:String(req.session.name)})
+    const token = req.cookies.token;
+
+    try {
+        if(token){
+        const user = jwt.verify(token,SESSION_SECRET)
+        return res.json({auth:true,name:user.name})
+        }   
+    } catch (error) {
+
     }
-    else{
-        res.json({auth:false})
-    }
+
+    res.json({auth:false})
     
 })
 
 router.post("/deltoken",(req,res)=>{
-    req.session.destroy(err => {
-        if (err) {
-            return res.json(false)
-        }
-        res.json(true)
-    });
+    res.clearCookie("token")
+    res.json(true)
       
 })
 
