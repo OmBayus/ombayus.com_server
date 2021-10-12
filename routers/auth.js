@@ -6,25 +6,13 @@ const {SESSION_SECRET} = require("../utils/config")
 
 
 router.post("/token",(req,res)=>{
-    res.cookie("adsad","dsad")
     User.findOne({name:req.body.name}).then(user=>{
         if(user){
             bcrypt.compare(req.body.password, user.password, function(err, result) {
                 if (result) {
                     const token = jwt.sign({name:req.body.name},SESSION_SECRET,{expiresIn:"1h"});
 
-                    const tokenOptions = process.env.NODE_ENV === "production" ? {
-                        // httpOnly:true,
-                        secure:true,
-                        maxAge:1000000,
-                        // signed:true
-                    } : {};
-
-                    
-
-                    res.cookie("token",token,tokenOptions)
-
-                    res.json({auth:true})
+                    res.json({auth:true,token})
                 }
                 else {
                     res.json({auth:false})
