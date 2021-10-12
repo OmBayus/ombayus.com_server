@@ -16,7 +16,7 @@ router.post("/token",(req,res)=>{
                         // httpOnly:true,
                         secure:true,
                         maxAge:1000000,
-                        signed:true
+                        // signed:true
                     } : {};
 
                     
@@ -38,7 +38,8 @@ router.post("/token",(req,res)=>{
 })
 
 router.post("/auth",(req,res)=>{
-    const token = process.env.NODE_ENV === "production" ? req.signedCookies.token : req.cookies.token;
+    // const token = process.env.NODE_ENV === "production" ? req.signedCookies.token : req.cookies.token;
+    const token = req.cookies.token
 
     try {
         if(token){
