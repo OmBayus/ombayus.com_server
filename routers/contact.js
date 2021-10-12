@@ -11,20 +11,8 @@ router.post("/sendMsg",async(req,res)=>{
         message:req.body.message
     })
 
-    if(Date.now() > (req.session.sendMsg  || 0) + (1000*60*60)){
-        newMsg.save((err)=>{
-            if(err){
-                return res.json({error:"error"})
-            }
-            SendMail("omerbayramcavus@gmail.com","ombayus.com Contact Message",newMsg)
-            req.session.sendMsg = Date.now()
-            res.json(newMsg)
-            
-        })
-    }
-    else{
-        res.json({error:"You can send one message per hour."})
-    }
+    SendMail("omerbayramcavus@gmail.com","ombayus.com Contact Message",newMsg)
+    res.json(newMsg)
     
 
 

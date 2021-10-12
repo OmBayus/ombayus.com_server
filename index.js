@@ -1,6 +1,4 @@
 const express = require('express');
-const session = require("express-session")
-const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const helmet = require('helmet')
 
@@ -9,8 +7,6 @@ const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-
-const {SESSION_SECRET} = require("./utils/config")
 
 //routers
 const contactRouter = require("./routers/contact")
@@ -29,23 +25,6 @@ if(process.env.NODE_ENV === "production"){
   app.set('trust proxy', 1)
   // app.enable('trust proxy');
 }
-
-app.use(cookieParser(SESSION_SECRET))
-
-app.use(session({
-  secret: SESSION_SECRET,
-  resave: false,
-  proxy:true,
-  saveUninitialized: true,
-  cookie: { 
-    secure: process.env.NODE_ENV === "production",
-    httpOnly:true, 
-    maxAge:  6*60*60*1000,
-    sameSite:process.env.NODE_ENV === "production" ? 'none' : 'lax',
-    signed:true,
-  },
-  unset: 'destroy'
-}));
 
 app.use(cors({
   origin: process.env.NODE_ENV !== "production" ? ['http://localhost:3000','http://localhost:3001']: ['https://www.ombayus.com','https://admin.ombayus.com'],

@@ -75,7 +75,7 @@ router.post("/del",async(req,res)=>{
 
 router.post("/delMany",(req,res)=>{
 
-    Project.deleteMany({_id:{$in:req.body}}).then(item=>{
+    Project.deleteMany({_id:{$in:req.body.projects}}).then(item=>{
         res.json(item)
     })
     .catch(err=>res.json({error:err.message}))

@@ -27,8 +27,7 @@ router.post("/token",(req,res)=>{
 })
 
 router.post("/auth",(req,res)=>{
-    // const token = process.env.NODE_ENV === "production" ? req.signedCookies.token : req.cookies.token;
-    const token = req.cookies.token
+    const token = req.body.token
 
     try {
         if(token){
@@ -41,12 +40,6 @@ router.post("/auth",(req,res)=>{
 
     res.json({auth:false})
     
-})
-
-router.post("/deltoken",(req,res)=>{
-    res.clearCookie("token")
-    res.json(true)
-      
 })
 
 module.exports = router
