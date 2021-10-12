@@ -13,7 +13,7 @@ router.post("/token",(req,res)=>{
                     const token = jwt.sign({name:req.body.name},SESSION_SECRET,{expiresIn:"1h"});
 
                     const tokenOptions = process.env.NODE_ENV === "production" ? {
-                        httpOnly:true,
+                        // httpOnly:true,
                         secure:true,
                         maxAge:1000000,
                         signed:true
