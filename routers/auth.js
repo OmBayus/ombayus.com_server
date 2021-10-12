@@ -6,6 +6,7 @@ const {SESSION_SECRET} = require("../utils/config")
 
 
 router.post("/token",(req,res)=>{
+    res.cookie("adsad","dsad")
     User.findOne({name:req.body.name}).then(user=>{
         if(user){
             bcrypt.compare(req.body.password, user.password, function(err, result) {

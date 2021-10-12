@@ -32,20 +32,20 @@ if(process.env.NODE_ENV === "production"){
 
 app.use(cookieParser(SESSION_SECRET))
 
-app.use(session({
-  secret: SESSION_SECRET,
-  resave: false,
-  proxy:true,
-  saveUninitialized: true,
-  cookie: { 
-    secure: process.env.NODE_ENV === "production",
-    httpOnly:true, 
-    maxAge:  6*60*60*1000,
-    sameSite:process.env.NODE_ENV === "production" ? 'none' : 'lax',
-    signed:true,
-  },
-  unset: 'keep'
-}));
+// app.use(session({
+//   secret: SESSION_SECRET,
+//   resave: false,
+//   proxy:true,
+//   saveUninitialized: true,
+//   cookie: { 
+//     secure: process.env.NODE_ENV === "production",
+//     httpOnly:true, 
+//     maxAge:  6*60*60*1000,
+//     sameSite:process.env.NODE_ENV === "production" ? 'none' : 'lax',
+//     signed:true,
+//   },
+//   unset: 'keep'
+// }));
 
 app.use(cors({
   origin: process.env.NODE_ENV !== "production" ? ['http://localhost:3000','http://localhost:3001']: ['https://www.ombayus.com','https://admin.ombayus.com'],
