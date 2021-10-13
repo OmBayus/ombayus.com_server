@@ -17,6 +17,7 @@ const userRouter = require("./routers/user")
 const authRouter = require("./routers/auth")
 
 const middleware = require("./utils/middleware")
+const socketMiddleware = require("./utils/socketMiddleware")
 
 app.use(helmet());
 
@@ -62,8 +63,14 @@ app.use(middleware.errorHandler)
 io.on('connection', (socket) => {
 
   socket.on("sendMsg",(data)=>{
-    socket.emit("sendMsg",true)
-    io.sockets.emit("Msg",data)
+    const auth = socketMiddleware.authExactor(data.token)
+    if(!auth.error){
+      socket.emit("sendMsg",true)
+      io.sockets.emit("Msg",data.msg)
+    }
+    else{
+      socket.emit("sendMsg",false)
+    }
   })
 });
 
