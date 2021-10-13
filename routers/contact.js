@@ -15,8 +15,14 @@ router.post("/sendMsg",async(req,res)=>{
         message:req.body.message
     })
 
-    SendMail("omerbayramcavus@gmail.com","ombayus.com Contact Message",newMsg)
-    res.json(newMsg)
+    newMsg.save((err)=>{
+        if(err){
+            return res.json({error:"error"})
+        }
+        SendMail("omerbayramcavus@gmail.com","ombayus.com Contact Message",newMsg)
+        res.json(newMsg)
+
+    })
     
 
 
