@@ -4,6 +4,10 @@ const SendMail = require("../utils/sendEmail")
 const {authExactor} = require("../utils/middleware")
 
 router.post("/sendMsg",async(req,res)=>{
+
+    if(req.body.msg){
+        return res.json({error:"You can send one message per hour."})
+    }
     
     const newMsg = new Contact({
         name:req.body.name,
