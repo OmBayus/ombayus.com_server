@@ -27,7 +27,7 @@ if(process.env.NODE_ENV === "production"){
 }
 
 app.use(cors({
-  origin: process.env.NODE_ENV !== "production" ? ['http://localhost:3000','http://localhost:3001']: ['https://www.ombayus.com','https://admin.ombayus.com'],
+  origin: process.env.NODE_ENV !== "production" ? ['http://localhost:3000','http://localhost:3001','http://localhost:3002']: ['https://www.ombayus.com','https://admin.ombayus.com'],
   credentials: true
 }));
 

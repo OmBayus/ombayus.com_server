@@ -3,6 +3,14 @@ const Product = require("../models/product")
 const {authExactor} = require("../utils/middleware")
 
 router.get("/getAll",(req,res)=>{
+    if(req.query.status){
+        Product.find({status:req.query.status},(err,items)=>{
+            if(!err){
+                  res.json(items)
+            }
+        })
+        return
+    }
     Product.find({},(err,items)=>{
         if(!err){
               res.json(items)
