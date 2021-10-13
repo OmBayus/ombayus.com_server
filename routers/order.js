@@ -3,6 +3,7 @@ const Order = require("../models/order")
 const Product = require("../models/product")
 const Iyzipay = require('iyzipay');
 const iyzipay = require("../utils/iyzipay")
+const {authExactor} = require("../utils/middleware")
 
 router.post("/pay",async(req,res)=>{
     const product = await Product.findById(req.body.product)
@@ -135,10 +136,14 @@ router.post("/checkout",(req,res)=>{
         })
         
     }
-    
-    
 })
 
+router.use(authExactor)
+
+router.get("/getLength",async(req,res)=>{
+    var len = await Order.count();
+    res.json({len})
+})
 
 
 
