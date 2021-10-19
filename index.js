@@ -15,6 +15,7 @@ const productRouter = require("./routers/product")
 const orderRouter = require("./routers/order")
 const userRouter = require("./routers/user")
 const authRouter = require("./routers/auth")
+const trafficRouter = require("./routers/traffic")
 
 const middleware = require("./utils/middleware")
 const socketMiddleware = require("./utils/socketMiddleware")
@@ -52,6 +53,7 @@ app.use("/api/project",projectRouter)
 app.use("/api/order",orderRouter)
 app.use("/api/product",productRouter)
 app.use("/api/user",userRouter)
+app.use("/api/traffic",trafficRouter)
 
 app.use(middleware.unknownEndpoint)
 
