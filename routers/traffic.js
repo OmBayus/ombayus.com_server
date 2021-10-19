@@ -50,7 +50,7 @@ router.post("/send",async(req,res)=>{
 
 // router.post("/create",(req,res)=>{
 //     const traffic = new Traffic({
-//         name:"Traffic",
+//         name:'Traffic',
 //         country: { TR: 1 },
 //         logins: { '19.10.2021': 1 },
 //         lastLogins: []
