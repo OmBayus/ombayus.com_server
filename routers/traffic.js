@@ -6,7 +6,7 @@ const geoip = require('geoip-lite');
 router.post("/send",async(req,res)=>{
     const origins = process.env.NODE_ENV !== "production" ? ['http://localhost:3000','http://localhost:3001','http://localhost:3002']: ['https://www.ombayus.com','https://admin.ombayus.com']
     if(origins.includes(req.headers.origin)){
-        var ip = req.header('x-forwarded-for');
+        var ip = process.env.NODE_ENV !== "production" ? "1.1.1.1" : req.headers['x-forwarded-for'] || req.socket.remoteAddress
         if(ip){
             const trafficmod = await Traffic.findOne({name:"Traffic"})
             const traffic = {
@@ -15,7 +15,6 @@ router.post("/send",async(req,res)=>{
                 logins:trafficmod.logins,
                 lastLogins:trafficmod.lastLogins
             }
-            console.log(traffic)
             var geo = geoip.lookup(ip);
             if(traffic.country[geo.country]){
                 traffic.country[geo.country] += 1
