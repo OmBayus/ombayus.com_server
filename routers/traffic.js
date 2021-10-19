@@ -37,8 +37,10 @@ router.post("/send",async(req,res)=>{
             else{
                 traffic.logins[new Date().toLocaleDateString()] = 1
             }
-            
-            Traffic.findOneAndUpdate({name:"Traffic"},traffic,{new:true})
+
+            Traffic.findOneAndUpdate({name:"Traffic"},traffic,{new:true}).then(t=>{
+                
+            })
             return res.json(true)
         }
     }
