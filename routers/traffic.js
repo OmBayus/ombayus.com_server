@@ -40,8 +40,10 @@ router.post("/send",async(req,res)=>{
             }
             
             Traffic.findOneAndUpdate({name:"Traffic"},traffic,{new:true})
+            return res.json(true)
         }
     }
+    res.json(false)
     
 })
 
