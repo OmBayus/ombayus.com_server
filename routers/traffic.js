@@ -28,7 +28,7 @@ router.post("/send",async(req,res)=>{
                 traffic.lastLogins.shift()
             }
 
-            traffic.lastLogins.push({ip,date:new Date().toString()})
+            traffic.lastLogins.push({ip:(ip+" ( " +geo.country+" )" ),date:new Date().toString()})
     
             if(traffic.logins[new Date().toLocaleDateString()]){
                 traffic.logins[new Date().toLocaleDateString()]+= 1
