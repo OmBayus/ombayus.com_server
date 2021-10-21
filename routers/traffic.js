@@ -1,6 +1,7 @@
 const router= require('express').Router()
 const Traffic = require("../models/traffic")
 const geoip = require('geoip-lite');
+const {authExactor} = require("../utils/middleware")
 
 
 router.post("/send",async(req,res)=>{
@@ -23,13 +24,11 @@ router.post("/send",async(req,res)=>{
                 traffic.country[geo.country] = 1
             }
     
-            if(traffic.lastLogins.length < 5){
-                traffic.lastLogins.push(ip)
-            }
-            else{
+            if(traffic.lastLogins.length > 10){
                 traffic.lastLogins.shift()
-                traffic.lastLogins.push(ip)
             }
+
+            traffic.lastLogins.push({ip,date:new Date().toString()})
     
             if(traffic.logins[new Date().toLocaleDateString()]){
                 traffic.logins[new Date().toLocaleDateString()]+= 1
@@ -47,6 +46,16 @@ router.post("/send",async(req,res)=>{
     res.json(false)
     
 })
+
+router.use(authExactor)
+
+router.get("/get",async(req,res)=>{
+    const trafficmod = await Traffic.findOne({name:"Traffic"})
+    res.json(trafficmod)
+})
+
+
+
 
 // router.post("/create",(req,res)=>{
 //     const traffic = new Traffic({
