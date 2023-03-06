@@ -43,7 +43,7 @@ require("./utils/mongo")
 
 
 app.get("/",(req,res)=>{
-  res.send("Hello")
+  res.send("ombayus")
 })
 
 //using outers
