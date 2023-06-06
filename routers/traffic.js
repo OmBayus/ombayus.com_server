@@ -17,6 +17,9 @@ router.post("/send",async(req,res)=>{
                 lastLogins:trafficmod.lastLogins
             }
             var geo = geoip.lookup(ip);
+            if(!geo){
+                return res.json(false)
+            }
             if(traffic.country[geo.country]){
                 traffic.country[geo.country] += 1
             }
