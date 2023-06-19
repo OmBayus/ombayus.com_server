@@ -25,7 +25,7 @@ router.post("/pay",async(req,res)=>{
             currency: Iyzipay.CURRENCY.TRY,
             basketId: 'B67832',
             paymentGroup: Iyzipay.PAYMENT_GROUP.PRODUCT,
-            callbackUrl: (process.env.NODE_ENV === "production"?("https://ombayuscom.herokuapp.com/api/order/checkout?order="+item.id):('http://localhost:4000/api/order/checkout?order='+item.id)),
+            callbackUrl: (process.env.NODE_ENV === "production"?("https://ombayus-server.onrender.com/api/order/checkout?order="+item.id):('http://localhost:4000/api/order/checkout?order='+item.id)),
             enabledInstallments: [2, 3, 6, 9],
             buyer: {
                 id: 'BY789',
